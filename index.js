@@ -4,7 +4,7 @@ const constants = require('./constants');
 
 const auth = new google.auth.GoogleAuth({
     keyFile: 'keyfile.json',
-    scopes: constants.SCOPES
+    scopes: constants.SCOPES,
 });
 
 exports.updateAuthorizedNetworks = async (req, res) => {
@@ -16,9 +16,23 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         auth: authClient
     })
 
-    const instance = sqlAdmin
+    const instances = await sqlAdmin.instances.list({
+        project: constants.PROJECT_ID
+    });
 
-    const ips = await this.getGrafanaSourceIPS();
+    console.log(instances.data);
+
+   // const ips = await this.getGrafanaSourceIPS();
+
+    // TODO
+    // Loop through all authorized IPS
+        // Remove any GRAFANA-AUTO-<IP>
+
+
+    // For each Grafana IPs
+        // Add IP GRAFANA-AUTO-<IP>
+
+    return res.send({ status: "ok" })
 }
 
 exports.getGrafanaSourceIPS = () => {
