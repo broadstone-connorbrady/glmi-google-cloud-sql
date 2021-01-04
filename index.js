@@ -8,11 +8,17 @@ const auth = new google.auth.GoogleAuth({
 });
 
 exports.updateAuthorizedNetworks = async (req, res) => {
+    const authClient = await auth.getClient();
+
+    const sqlAdmin = await google.sqladmin({
+        version: 'v1beta4',
+        project: constants.PROJECT_ID,
+        auth: authClient
+    })
+
+    const instance = sqlAdmin
 
     const ips = await this.getGrafanaSourceIPS();
-    console.log(ips);
-
-    res.send({"Status": "Work2s"})
 }
 
 exports.getGrafanaSourceIPS = () => {
