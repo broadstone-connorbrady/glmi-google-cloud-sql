@@ -1,0 +1,15 @@
+{
+  "name": "glmi-google-cloud-sql",
+  "version": "1.0.0",
+  "description": "Grafana - Let me in (Google Cloud SQL)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^66.0.0"
+  }
+}
