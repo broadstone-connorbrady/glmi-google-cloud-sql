@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "googleapis": "^66.0.0"
+    "googleapis": "^66.0.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.7.1"
   }
 }
