@@ -23,6 +23,8 @@ exports.updateAuthorizedNetworks = async (req, res) => {
     const grafanaSourceIPs = await this.getGrafanaSourceIPs();
 
     for (const instance of instances.data.items) {
+        const name = instance.name;
+
         const authorizedNetworks = instance.settings.ipConfiguration.authorizedNetworks;
         const authorizedNetworksToUpdate = [];
 
@@ -35,12 +37,33 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         for(const ip of grafanaSourceIPs) {
             authorizedNetworksToUpdate.push({
                 value: ip,
-                name: constants.NAME_PREFIX + ip
+                name: constants.NAME_PREFIX + ip,
+                kind: 'sql#aclEntry', // This is always set to this,
             })
         }
 
-        console.log(authorizedNetworks);
-        console.log(authorizedNetworksToUpdate);
+
+        try {
+            const updateResult = await sqlAdmin.instances.patch({
+                project: constants.PROJECT_ID,
+                instance: name,
+                requestBody: {
+                    settings: {
+                        ipConfiguration: {
+                            authorizedNetworks: authorizedNetworksToUpdate
+                        }
+                    }
+                }
+            });
+
+            console.log(updateResult);
+
+        } catch (error) {
+            console.error(error);
+        }
+
+        // console.log(authorizedNetworks);
+        // console.log(authorizedNetworksToUpdate);
     }
 
     // TODO
