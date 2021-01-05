@@ -4,7 +4,7 @@
   "description": "Grafana - Let me in (Google Cloud SQL)",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha"
+    "test": "nyc --reporter=text --all mocha"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +15,8 @@
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.7.1",
-    "mocha": "^8.2.1",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.3",
     "nyc": "^15.1.0"
   }
 }
