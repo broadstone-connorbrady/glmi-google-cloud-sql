@@ -55,18 +55,12 @@ exports.updateAuthorizedNetworks = async (req, res) => {
                     }
                 }
             });
-
-            console.log(updateResult);
-
         } catch (error) {
-            console.error(error);
+            return res.send(this.returnError(error.message), 500)
         }
-
-        // console.log(authorizedNetworks);
-        // console.log(authorizedNetworksToUpdate);
     }
 
-    return res.send({ status: "ok" })
+    return res.send(this.returnSuccess(), 200)
 }
 
 exports.getGrafanaSourceIPs = () => {
@@ -79,4 +73,18 @@ exports.getGrafanaSourceIPs = () => {
                 console.log(error);
             });
     });
+}
+
+exports.returnError = (error) => {
+    return {
+        'ok': false,
+        'message': error
+    }
+}
+
+exports.returnSuccess = (message = 'Database updated successfully') => {
+    return {
+        'ok': true,
+        'error': message
+    }
 }
