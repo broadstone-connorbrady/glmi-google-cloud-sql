@@ -66,14 +66,6 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         // console.log(authorizedNetworksToUpdate);
     }
 
-    // TODO
-    // Loop through all authorized IPS
-        // Remove any GRAFANA-AUTO-<IP>
-
-
-    // For each Grafana IPs
-        // Add IP GRAFANA-AUTO-<IP>
-
     return res.send({ status: "ok" })
 }
 
