@@ -20,7 +20,18 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         project: constants.PROJECT_ID
     });
 
-    console.log(instances.data);
+    for (const instance of instances.data.items) {
+        const authorizedNetworks = instance.settings.ipConfiguration.authorizedNetworks;
+        const authorizedNetworksToUpdate = [];
+
+        // Add any existing authorized networks to the array to update
+        for(const authorizedNetwork of authorizedNetworks) {
+            if(!authorizedNetwork.name.includes(constants.NAME_PREFIX)) authorizedNetworksToUpdate.push(authorizedNetwork);
+        }
+
+        console.log(authorizedNetworks);
+        console.log(authorizedNetworksToUpdate);
+    }
 
    // const ips = await this.getGrafanaSourceIPS();
 
