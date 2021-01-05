@@ -202,4 +202,7 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
+# Our keyfile
+keyfile.json
+
 # End of https://www.toptal.com/developers/gitignore/api/webstorm+all,node
