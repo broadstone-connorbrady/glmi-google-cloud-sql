@@ -20,6 +20,8 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         project: constants.PROJECT_ID
     });
 
+    const grafanaSourceIPs = await this.getGrafanaSourceIPs();
+
     for (const instance of instances.data.items) {
         const authorizedNetworks = instance.settings.ipConfiguration.authorizedNetworks;
         const authorizedNetworksToUpdate = [];
@@ -29,11 +31,17 @@ exports.updateAuthorizedNetworks = async (req, res) => {
             if(!authorizedNetwork.name.includes(constants.NAME_PREFIX)) authorizedNetworksToUpdate.push(authorizedNetwork);
         }
 
+        // Add the Grafana source IPs
+        for(const ip of grafanaSourceIPs) {
+            authorizedNetworksToUpdate.push({
+                value: ip,
+                name: constants.NAME_PREFIX + ip
+            })
+        }
+
         console.log(authorizedNetworks);
         console.log(authorizedNetworksToUpdate);
     }
-
-   // const ips = await this.getGrafanaSourceIPS();
 
     // TODO
     // Loop through all authorized IPS
@@ -46,7 +54,7 @@ exports.updateAuthorizedNetworks = async (req, res) => {
     return res.send({ status: "ok" })
 }
 
-exports.getGrafanaSourceIPS = () => {
+exports.getGrafanaSourceIPs = () => {
     return new Promise(function(resolve, reject) {
         axios.get(constants.URL_GRAFANA_SOURCE_IPS)
             .then(response => {
