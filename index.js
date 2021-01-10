@@ -7,29 +7,6 @@ const auth = new google.auth.GoogleAuth({
     scopes: constants.SCOPES,
 });
 
-exports.filterOldGrafanaSourceIps = (array) => {
-    const authorizedNetworksToReturn = [];
-
-    // Add any existing authorized networks to the array to update
-    for(const authorizedNetwork of array) {
-        if(!authorizedNetwork.name.includes(constants.NAME_PREFIX)) authorizedNetworksToReturn.push(authorizedNetwork);
-    }
-
-    return authorizedNetworksToReturn;
-};
-
-exports.addNewGrafanaSourceIps = (authorizedNetworksToUpdate, grafanaSourceIPs) => {
-    for(const ip of grafanaSourceIPs) {
-        authorizedNetworksToUpdate.push({
-            value: ip,
-            name: constants.NAME_PREFIX + ip,
-            kind: 'sql#aclEntry', // This is always set to this,
-        })
-    }
-
-    return authorizedNetworksToUpdate;
-};
-
 exports.updateAuthorizedNetworks = async (req, res) => {
     const authClient = await auth.getClient();
 
@@ -91,6 +68,29 @@ exports.getGrafanaSourceIPs = () => {
                 console.log(error);
             });
     });
+};
+
+exports.addNewGrafanaSourceIps = (authorizedNetworksToUpdate, grafanaSourceIPs) => {
+    for(const ip of grafanaSourceIPs) {
+        authorizedNetworksToUpdate.push({
+            value: ip,
+            name: constants.NAME_PREFIX + ip,
+            kind: 'sql#aclEntry', // This is always set to this,
+        })
+    }
+
+    return authorizedNetworksToUpdate;
+};
+
+exports.filterOldGrafanaSourceIps = (array) => {
+    const authorizedNetworksToReturn = [];
+
+    // Add any existing authorized networks to the array to update
+    for(const authorizedNetwork of array) {
+        if(!authorizedNetwork.name.includes(constants.NAME_PREFIX)) authorizedNetworksToReturn.push(authorizedNetwork);
+    }
+
+    return authorizedNetworksToReturn;
 };
 
 exports.returnError = (error) => {
