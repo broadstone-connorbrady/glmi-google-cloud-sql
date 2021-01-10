@@ -21,7 +21,14 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         project: constants.PROJECT_ID
     });
 
-    const grafanaSourceIPs = await this.getGrafanaSourceIPs();
+    let grafanaSourceIPs = [];
+
+    try {
+        grafanaSourceIPs = await this.getGrafanaSourceIPs();
+    } catch (error) {
+        return res.send(this.returnError(error.message), 500)
+    }
+
 
     for (const instance of instances.data.items) {
         const name = instance.name;
@@ -33,11 +40,6 @@ exports.updateAuthorizedNetworks = async (req, res) => {
 
         // Add the Grafana source IPs
         authorizedNetworksToUpdate = this.addNewGrafanaSourceIps(authorizedNetworksToUpdate, grafanaSourceIPs)
-
-        console.log(authorizedNetworksToUpdate);
-        return;
-
-
 
         try {
             const updateResult = await sqlAdmin.instances.patch({
@@ -66,7 +68,7 @@ exports.getGrafanaSourceIPs = () => {
                 resolve(response.data);
             })
             .catch(error => {
-                console.log(error);
+                reject(error.message);
             });
     });
 };
