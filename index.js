@@ -37,7 +37,7 @@ exports.updateAuthorizedNetworks = async (req, res) => {
         version: 'v1beta4',
         project: constants.PROJECT_ID,
         auth: authClient
-    })
+    });
 
     const instances = await sqlAdmin.instances.list({
         project: constants.PROJECT_ID
@@ -79,7 +79,7 @@ exports.updateAuthorizedNetworks = async (req, res) => {
     }
 
     return res.send(this.returnSuccess(), 200)
-}
+};
 
 exports.getGrafanaSourceIPs = () => {
     return new Promise(function(resolve, reject) {
@@ -91,18 +91,18 @@ exports.getGrafanaSourceIPs = () => {
                 console.log(error);
             });
     });
-}
+};
 
 exports.returnError = (error) => {
     return {
         'ok': false,
         'message': error
     }
-}
+};
 
 exports.returnSuccess = (message = 'Database updated successfully') => {
     return {
         'ok': true,
-        'error': message
+        'message': message
     }
-}
+};
