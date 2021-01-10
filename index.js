@@ -7,6 +7,7 @@ const auth = new google.auth.GoogleAuth({
     scopes: constants.SCOPES,
 });
 
+/* istanbul ignore next */
 exports.updateAuthorizedNetworks = async (req, res) => {
     const authClient = await auth.getClient();
 
