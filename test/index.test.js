@@ -34,4 +34,12 @@ describe('Responses - Check response formatting', () => {
         assert.strictEqual(response.ok, true);
         assert.strictEqual(response.message, messasge);
     });
+
+    it('Should pass - Valid bad response', () => {
+        const error = 'An error happened';
+        const response = index.returnError(error);
+
+        assert.strictEqual(response.ok, false);
+        assert.strictEqual(response.message, error);
+    });
 });
