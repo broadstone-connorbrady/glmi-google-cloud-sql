@@ -26,7 +26,7 @@ Note: Your database must be running for this to work
 - run `npm run test`
 
 ## Contributions    
-Create a PR (I don't have any red-tape yet to wrap around PR formats) And I'll review it as soon as possible    
+Create a PR (I don't have any red tape yet to wrap around PR formats) And I'll review it as soon as possible    
 
 ## Support    
  Post an issue and I will try to get around to fixing it as soon as possible.    
