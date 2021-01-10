@@ -44,7 +44,7 @@ describe('Responses - Check response formatting', () => {
     });
 });
 
-describe('Filtering out old generated IPs', () => {
+describe('IP add + removal', () => {
     it('Should pass - Filtering out generated IPs', () => {
         const networks = [
             {
@@ -67,5 +67,26 @@ describe('Filtering out old generated IPs', () => {
         const nonGeneratedIpsOnly = index.filterOldGrafanaSourceIps(networks);
 
         assert.strictEqual(nonGeneratedIpsOnly.length, 1);
+    });
+
+    it('Should pass - Adding new IPs', () => {
+        const networks = [
+            {
+                value: '102.202.418.20',
+                name: 'A VPN',
+                kind: 'sql#aclEntry',
+                expirationTime: '2022-10-02T15:01:23Z'
+            }];
+
+        const mockGrafanaIps = [
+            '35.227.45.117',
+            '101.31.451.24',
+            '101.31.451.25',
+            '101.31.451.26'
+        ];
+
+        const networksToAuthorize = index.addNewGrafanaSourceIps(networks, mockGrafanaIps);
+
+        assert.strictEqual(networksToAuthorize.length, 5);
     });
 });
