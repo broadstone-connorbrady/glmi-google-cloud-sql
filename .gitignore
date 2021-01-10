@@ -208,4 +208,7 @@ keyfile.json
 # Test output
 .nyc_output
 
+# Ignore constants
+constants.js
+
 # End of https://www.toptal.com/developers/gitignore/api/webstorm+all,node
