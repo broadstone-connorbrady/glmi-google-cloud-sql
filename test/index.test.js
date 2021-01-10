@@ -17,4 +17,21 @@ describe('Grafana - Get Source IPs', async () => {
         const ips = await index.getGrafanaSourceIPs();
         assert.notStrictEqual(ips.length, 0);
     });
-})
+});
+
+describe('Responses - Check response formatting', () => {
+    it('Should pass - Valid okay response', () => {
+        const response = index.returnSuccess();
+
+        assert.strictEqual(response.ok, true);
+        assert.strictEqual(response.message, 'Database updated successfully');
+    });
+
+    it('Should pass - Valid okay response with custom message', () => {
+        const messasge = 'We managed to do something okay';
+        const response = index.returnSuccess(messasge);
+
+        assert.strictEqual(response.ok, true);
+        assert.strictEqual(response.message, messasge);
+    });
+});
