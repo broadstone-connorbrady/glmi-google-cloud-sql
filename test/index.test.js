@@ -43,3 +43,29 @@ describe('Responses - Check response formatting', () => {
         assert.strictEqual(response.message, error);
     });
 });
+
+describe('Filtering out old generated IPs', () => {
+    it('Should pass - Filtering out generated IPs', () => {
+        const networks = [
+            {
+                value: '102.202.418.20',
+                name: 'A VPN',
+                kind: 'sql#aclEntry',
+                expirationTime: '2022-10-02T15:01:23Z'
+            },
+            {
+                value: '35.227.45.117',
+                name: 'grafana-auto-35.227.45.117',
+                kind: 'sql#aclEntry'
+            },
+            {
+                value: '34.83.215.95',
+                name: 'grafana-auto-34.83.215.95',
+                kind: 'sql#aclEntry'
+            }];
+
+        const nonGeneratedIpsOnly = index.filterOldGrafanaSourceIps(networks);
+
+        assert.strictEqual(nonGeneratedIpsOnly.length, 1);
+    });
+});
