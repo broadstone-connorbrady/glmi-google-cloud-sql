@@ -32,6 +32,8 @@ exports.updateAuthorizedNetworks = async (req, res) => {
 
     for (const instance of instances.data.items) {
         const name = instance.name;
+        
+        if(!constants.DATABASE_INSTANCES.includes(name)) continue;
 
         const authorizedNetworks = instance.settings.ipConfiguration.authorizedNetworks;
 
